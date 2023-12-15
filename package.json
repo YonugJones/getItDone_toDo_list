@@ -1,0 +1,15 @@
+{
+  "name": "getitdone_todo_list",
+  "version": "1.0.0",
+  "description": "to do list with intuitive UI and productivity features",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "YonugJones",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
