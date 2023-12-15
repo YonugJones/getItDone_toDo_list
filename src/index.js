@@ -1,22 +1,21 @@
 import { Project } from "./modules/projects";
+import { Task, addTaskToProject } from "./modules/tasks";
 
-console.log('Creating Project One');
-const projectOne = new Project('Project One', 'This is the first project', 'December 25');
-console.log(projectOne);
-
-console.log('Creating Project Two');
-const projectTwo = new Project('Project Two', 'This is the second project', 'December 26');
-console.log(projectTwo);
+const projectOne = new Project('Project One', 'There are no tasks', 'December 1');
 
 const projectLibrary = [];
 
-console.log('Adding Project One to library.')
+console.log('Project One does not yet have tasks');
 Project.addProjectToLibrary(projectOne, projectLibrary);
-console.log(projectLibrary)
+console.log(projectOne);
 
-console.log('Adding Project Two to library.')
-Project.addProjectToLibrary(projectTwo, projectLibrary);
-console.log(projectLibrary)
+const taskOne = new Task('Task One', 'December 20', 'High');
 
-console.log('Showing full projectLibrary:');
+console.log('Adding taskOne to projectOne');
+addTaskToProject(taskOne, projectOne);
+console.log(projectOne);
+
+console.log('Showing updated Project Library');
 console.log(projectLibrary);
+
+
