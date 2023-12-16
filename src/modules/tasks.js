@@ -1,36 +1,18 @@
-// export class Task {
-//     constructor(name, dueDate, priority, project = null) {
-//         this.name = name;
-//         this.dueDate = dueDate;
-//         this.priority = priority;
-//         this.project = project;
+import { projectLibrary } from "./projects";
 
-//         if (project) {
-//             project.tasks.push(this);
-//         }
-//     }
-// }
- 
-// export function addTaskToProject(task, project) {
-//     project.tasks.push(task);
-// }
+export const taskLibrary = [];
 
-const taskLibrary = [];
+export function Task(name, dueDate, priority) {
+    this.name = name,
+    this.dueDate = dueDate,
+    this.priority = priority
 
-function createTask(name, dueDate, priority) {
-    function addTaskToProject(project) {
-        project.tasks.push(task);
+    this.addTaskToLibrary = function() {
+        taskLibrary.push(this);
     }
 
-    const task = {
-        name,
-        dueDate,
-        priority,
-        addTaskToProject,
-    };
-
-    taskLibrary.push(task);
-    return task;
+    this.addTaskToProject = function(project) {
+        // code logic to push selected task to tasks array inside of selected project
+    }
 }
 
-export { createTask, taskLibrary };
