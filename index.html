@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GetItDone</title>
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="main.js"></script>
 </head>
 <body>
-    <button id="add-project-button">ADD PROJECT</button>
-    <button id="add-task-button">ADD TASK</button>
-    <button id="add-task-to-project-button">ADD TASK TO PROJECT</button>
+    <div class="project-list">
+        <button id="create-project-button">CREATE PROJECT</button>
+        <button id="delete-project-button">DELETE PROJECT</button>
+    </div>
+    <div class="task-list">
+        <button id="create-task-button">CREATE TASK</button>
+        <button id="add-task-to-project-button">ADD TASK TO PROJECT</button>
+        <button id="delete-task-button">DELETE TASK</button>
+        <button id="remove-task-from-project-button">REMOVE TASK FROM PROJECT</button>
+    </div>
 </body>
 </html>
