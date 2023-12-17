@@ -2,7 +2,7 @@ import { renderProjectLibrary, renderTaskLibrary } from "./domManipulation";
 import { Project, projectLibrary } from "./projects";
 import { Task, taskLibrary } from "./tasks";
 
-export function handleAddProject() {
+export function handleCreateProject() {
     const projectName = prompt('Enter project name:');
     const projectDescription = prompt('Enter project description;');
     const projectDueDate = prompt('Enter project due date:');
@@ -12,27 +12,99 @@ export function handleAddProject() {
     renderProjectLibrary();
 }
 
-export function handleAddTask() {
+export function handleDeleteProject() {
+    const projectName = prompt('Enter project name to delete:')
+    const project = projectLibrary.find(proj => proj.name === projectName);
+
+    if (project) {
+        console.log(`Removing Project: ${project.name} from projectLibrary`);
+        project.removeFromProjectLibrary();
+        renderProjectLibrary();
+    } else {
+        console.error('Project not found in projectLibrary');
+        renderProjectLibrary();
+    }
+}
+
+export function handleCreateTask() {
     const taskName = prompt('Enter task name:');
     const taskDueDate = prompt('Enter task due date:');
     const taskPriority = prompt('Enter task priority:');
 
     const newTask = new Task(taskName, taskDueDate, taskPriority);
-    newTask.addTaskToLibrary();
+    newTask.addToTaskLibrary();
     renderTaskLibrary();
 }
 
+export function handleDeleteTask() {
+    const taskName = prompt('Enter task name to delte');
+    const task = taskLibrary.find(t => t.name === taskName);
+
+    if (task) {
+        console.log(`Removing task ${task.name} from taskLibrary`);
+        task.removeFromTaskLibrary();
+        renderTaskLibrary();
+    } else {
+        console.error('Task not found in taskLibrary');
+        renderTaskLibrary();
+    }
+}
+
 export function handleAddTaskToProject() {
-    // logic to give user choice to move task to project
+    const taskName = prompt('Enter task name to move');
+    const task = taskLibrary.find(t => t.name === taskName);
+
+    const projectName = prompt('Enter project to move task into');
+    const project = projectLibrary.find(proj => proj.name === projectName);
+
+    if (task && project) {
+        console.log(`Adding Task: ${task.name} into Project: ${project.name}`);
+        project.tasks.push(task);
+        renderProjectLibrary();
+    } else {
+        console.error('Task or Project not found');
+        renderProjectLibrary();
+    }
+}
+
+export function handleRemoveTaskFromProject() {
+    const taskName = prompt('Enter task name to move');
+    const task = taskLibrary.find(t => t.name === taskName); 
+
+    const projectName = prompt('Enter project to remove task from');
+    const project = projectLibrary.find(proj => proj.name === projectName);
+
+    if (task && project) {
+        console.log('Task and Project found');
+
+        const index = project.tasks.indexOf(task);
+        if (index !== -1) {
+            console.log(`Removing Task: ${task.name} from Project: ${project.name}`)
+            project.tasks.splice(index, 1);
+            renderProjectLibrary();
+        }
+    } else {
+        console.error('Task and or Project not found');
+        renderProjectLibrary();
+    }
 }
 
 export function assignHandler() {
-    const addProjectButton = document.getElementById('add-project-button');
-    addProjectButton.addEventListener('click', handleAddProject);
+    const createProjectButton = document.getElementById('create-project-button');
+    createProjectButton.addEventListener('click', handleCreateProject);
 
-    const addTaskButton = document.getElementById('add-task-button');
-    addTaskButton.addEventListener('click', handleAddTask);
+    const deleteProjectButton = document.getElementById('delete-project-button');
+    deleteProjectButton.addEventListener('click', handleDeleteProject);
 
-    const addTaskToProject = document.getElementById('add-task-to-project-button');
-    addTaskToProject.addEventListener('click', handleAddTaskToProject);
+    const createTaskButton = document.getElementById('create-task-button');
+    createTaskButton.addEventListener('click', handleCreateTask);
+
+    const deleteTaskButton = document.getElementById('delete-task-button');
+    deleteTaskButton.addEventListener('click', handleDeleteTask);
+
+    const addTaskToProjectButton = document.getElementById('add-task-to-project-button');
+    addTaskToProjectButton.addEventListener('click', handleAddTaskToProject);
+
+    const removeTaskFromProjectButton = document.getElementById('remove-task-from-project-button');
+    removeTaskFromProjectButton.addEventListener('click', handleRemoveTaskFromProject);
 }

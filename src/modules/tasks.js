@@ -1,5 +1,3 @@
-import { projectLibrary } from "./projects";
-
 export const taskLibrary = [];
 
 export function Task(name, dueDate, priority) {
@@ -7,12 +5,18 @@ export function Task(name, dueDate, priority) {
     this.dueDate = dueDate,
     this.priority = priority
 
-    this.addTaskToLibrary = function() {
+    this.addToTaskLibrary = function() {
         taskLibrary.push(this);
     }
 
-    this.addTaskToProject = function(project) {
-        // code logic to push selected task to tasks array inside of selected project
+    this.removeFromTaskLibrary = function() {
+        const index = taskLibrary.indexOf(this);
+
+        if (index !== -1) {
+            taskLibrary.splice(index, 1);
+        } else {
+            console.error('Task not found in taskLibrary');
+        }
     }
 }
 
