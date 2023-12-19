@@ -1,32 +1,73 @@
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: black;
-    color: white;
+@import url(https://fonts.googleapis.com/css?family=VT323:regular);
+
+:root {
+    --background-color: #282828;
+    --font-color: #33FF33;
+    --font-colorV2: #FFB000;
+    --font-colorV3: #FFCC00;
 }
 
-.project-list,
-.task-list {
-    text-align: center; 
-    margin-bottom: 20px; 
-    border: 1px solid white;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    margin: 0;
+    overflow-x: hidden;
+    padding-top: 95px; 
+    font-family: 'VT323';
+}
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 30px;
+    border: 1px solid var(--font-color);
+    border-radius: 5px;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    background-color: var(--background-color);
+}
+
+main {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 300px auto;
+    border: 1px solid var(--font-color);
+    border-radius: 5px;
+}
+
+.sort {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.project-list {
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px solid var(--font-color);
     border-radius: 20px;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
 }
 
 button {
     cursor: pointer;
     margin: 10px;
-    font-size: 50px;
+    font-size: 15px;
     border-style: none;
     border-radius: 20px;
-}
+    font-family: 'VT323';
+}    
