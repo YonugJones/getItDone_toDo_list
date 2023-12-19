@@ -5,18 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GetItDone</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=VT323:regular" rel="stylesheet" />
     <script type="module" src="main.js"></script>
 </head>
 <body>
-    <div class="project-list">
-        <button id="create-project-button">CREATE PROJECT</button>
-        <button id="delete-project-button">DELETE PROJECT</button>
-    </div>
-    <div class="task-list">
-        <button id="create-task-button">CREATE TASK</button>
-        <button id="add-task-to-project-button">ADD TASK TO PROJECT</button>
-        <button id="delete-task-button">DELETE TASK</button>
-        <button id="remove-task-from-project-button">REMOVE TASK FROM PROJECT</button>
-    </div>
+    <header>
+        <div class="timer">'TIMER'</div>
+        <h1>GET IT DONE</h1>
+        <div class="calendar">'CALENDAR'</div>
+    </header>
+    <main>
+        <div class="sort">
+            <button>ALL TASKS</button>
+            <button>TODAY</button>
+            <button>THIS WEEK</button>
+            <button>HIGH PRIORITY</button>
+            <div class="project-list">
+                <h1 class="project-list-title">PROJECTS</h1>
+                <button id="create-project-button">CREATE PROJECT</button>
+            </div>
+            
+            <button id="delete-project-button">DELETE PROJECT</button>
+            <div class="task-list"></div>
+                <button id="create-task-button">CREATE TASK</button>
+                <button id="add-task-to-project-button">ADD TASK TO PROJECT</button>
+                <button id="delete-task-button">DELETE TASK</button>
+                <button id="remove-task-from-project-button">REMOVE TASK FROM PROJECT</button>
+        </div>
+        <div class="layout">
+        </div>
+    </main>
+    
 </body>
 </html>

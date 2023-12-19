@@ -18,5 +18,15 @@ export function Task(name, dueDate, priority) {
             console.error('Task not found in taskLibrary');
         }
     }
+
+    this.complete = false;
+
+    this.markAsComplete = function() {
+        this.complete = true;
+    }
+
+    this.markAsIncomplete = function() {
+        this.complete = false;
+    }
 }
 

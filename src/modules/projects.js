@@ -19,4 +19,14 @@ export function Project(name, description, dueDate) {
             console.error('Project not found in projectLibrary')
         }
     }
+
+    this.complete = false;
+
+    this.markAsComplete = function() {
+        this.complete = true;
+    };
+
+    this.markAsIncomplete = function() {
+        this.complete = false;
+    }
 }
