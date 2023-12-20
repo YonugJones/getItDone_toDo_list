@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GetItDone</title>
+    <title>_gitItDone</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=VT323:regular" rel="stylesheet" />
     <script type="module" src="main.js"></script>
@@ -11,29 +11,33 @@
 <body>
     <header>
         <div class="timer">'TIMER'</div>
-        <h1>GET IT DONE</h1>
+        <h1>_gitItDone</h1>
         <div class="calendar">'CALENDAR'</div>
     </header>
     <main>
-        <div class="sort">
-            <button>ALL TASKS</button>
-            <button>TODAY</button>
-            <button>THIS WEEK</button>
-            <button>HIGH PRIORITY</button>
-            <div class="project-list">
-                <h1 class="project-list-title">PROJECTS</h1>
-                <button id="create-project-button">CREATE PROJECT</button>
+        <div id="sort" class="sort">
+            <!-- SORT BY SECTION -->
+            <div class="sort-by">
+                <button>ALL TASKS</button>
+                <button>TODAY</button>
+                <button>THIS WEEK</button>
+                <button>HIGH PRIORITY</button>
             </div>
-            
-            <button id="delete-project-button">DELETE PROJECT</button>
-            <div class="task-list"></div>
-                <button id="create-task-button">CREATE TASK</button>
-                <button id="add-task-to-project-button">ADD TASK TO PROJECT</button>
-                <button id="delete-task-button">DELETE TASK</button>
-                <button id="remove-task-from-project-button">REMOVE TASK FROM PROJECT</button>
+            <!-- PROJECT SECTION -->
+            <div class="project-section">
+                <h1 class="project-section-title">PROJECTS</h1>
+                <ul id="project-list">
+                    <!-- DYNAMICALLY CREATED LIST ITEMS APPEAR HERE -->
+                </ul>
+                <button id="create-project-button">CREATE PROJECT</button>
+                <button id="delete-project-button">DELETE PROJECT</button>
+            </div>
+            <button id="create-task-button">CREATE TASK</button>
+            <button id="add-task-to-project-button">ADD TASK TO PROJECT</button>
+            <button id="delete-task-button">DELETE TASK</button>
+            <button id="remove-task-from-project-button">REMOVE TASK FROM PROJECT</button>
         </div>
-        <div class="layout">
-        </div>
+        <div id="layout-section"></div>
     </main>
     
 </body>
