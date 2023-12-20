@@ -1,4 +1,4 @@
-import { renderProjectLibrary, renderTaskLibrary } from "./domManipulation";
+import { renderProjectLibrary, renderTaskLibrary, renderProjectListDisplay, renderProjectDetails } from "./domManipulation";
 import { Project, projectLibrary } from "./projects";
 import { Task, taskLibrary } from "./tasks";
 
@@ -10,6 +10,7 @@ export function handleCreateProject() {
     const newProject = new Project(projectName, projectDescription, projectDueDate);
     newProject.addToProjectLibrary();
     renderProjectLibrary();
+    renderProjectListDisplay();
 }
 
 export function handleDeleteProject() {
@@ -20,9 +21,25 @@ export function handleDeleteProject() {
         console.log(`Removing Project: ${project.name} from projectLibrary`);
         project.removeFromProjectLibrary();
         renderProjectLibrary();
+        renderProjectListDisplay();
     } else {
         console.error('Project not found in projectLibrary');
         renderProjectLibrary();
+        renderProjectListDisplay();
+    }
+}
+
+export function handleProjectListItemClick(event) {
+    const clickedElement = event.target.closest('.project-list-item');
+    if (clickedElement) {
+        const projectName = clickedElement.textContent;
+        const project = projectLibrary.find(proj => proj.name === projectName);
+
+        if (project) {
+            renderProjectDetails(project)
+        } else {
+            console.error('Project not found in projectLibrary');
+        }
     }
 }
 
@@ -107,4 +124,7 @@ export function assignHandler() {
 
     const removeTaskFromProjectButton = document.getElementById('remove-task-from-project-button');
     removeTaskFromProjectButton.addEventListener('click', handleRemoveTaskFromProject);
+
+    const projectList = document.getElementById('project-list');
+    projectList.addEventListener('click', handleProjectListItemClick);
 }

@@ -2,6 +2,7 @@
 
 :root {
     --background-color: #282828;
+    --background-color-thin: rgba(255, 255, 255, 0.25);
     --font-color: #33FF33;
     --font-colorV2: #FFB000;
     --font-colorV3: #FFCC00;
@@ -20,8 +21,7 @@ body {
     background-color: var(--background-color);
     color: var(--font-color);
     margin: 0;
-    overflow-x: hidden;
-    padding-top: 95px; 
+    padding-top: 128px; 
     font-family: 'VT323';
 }
 
@@ -31,36 +31,66 @@ header {
     width: 100%;
     justify-content: space-between;
     padding: 30px;
-    border: 1px solid var(--font-color);
+    border: 2px solid var(--font-color);
     border-radius: 5px;
     position: fixed;
     top: 0;
     z-index: 999;
     background-color: var(--background-color);
+    font-size: 2rem;
 }
 
 main {
     display: grid;
     gap: 15px;
     grid-template-columns: 300px auto;
-    border: 1px solid var(--font-color);
+    border: 2px solid var(--font-color);
     border-radius: 5px;
+    padding: 15px;
 }
 
-.sort {
+#sort {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    border: 2px solid var(--font-color);
+    border-radius: 5px;
 }
 
-.project-list {
+.sort-by {
+    display: flex;
+    flex-direction: column;
+}
+
+#layout {
+    border: 2px solid var(--font-color);
+    border-radius: 5px;
+}
+
+.project-section {
     text-align: center;
     margin-bottom: 20px;
-    border: 1px solid var(--font-color);
+    border: 2px solid var(--font-color);
     border-radius: 20px;
     padding: 30px;
     display: flex;
     flex-direction: column;
+}
+
+#project-list {
+    list-style: none;
+    padding: 0; 
+}
+
+#project-list li {
+    margin: 5px 0; 
+    padding: 2px; 
+}
+
+#project-list li:hover {
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: var(--background-color-thin);
 }
 
 button {
@@ -71,3 +101,7 @@ button {
     border-radius: 20px;
     font-family: 'VT323';
 }    
+
+button:hover {
+    background-color: var(--font-color);
+}
