@@ -4,6 +4,14 @@ import { Task, taskLibrary } from "./tasks";
 
 export function handleCreateProject() {
     const projectName = prompt('Enter project name:');
+
+    const projectExists = projectLibrary.some(proj => proj.name === projectName)
+
+    if (projectExists) {
+        alert('Project name already taken. Please choose a new one.');
+        return;
+    }
+
     const projectDescription = prompt('Enter project description;');
     const projectDueDate = prompt('Enter project due date:');
 
