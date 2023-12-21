@@ -29,32 +29,33 @@ export function renderProjectDetails(project) {
 
         const projectName = document.createElement('h2');
         projectName.textContent = project.name;
+        projectName.classList.add('project-details-name');
 
         const projectDescription = document.createElement('p');
         projectDescription.textContent = project.description;
+        projectDescription.classList.add('project-details-description')
 
         const projectDueDate = document.createElement('p');
         projectDueDate.textContent = project.dueDate;
+        projectDueDate.classList.add('project-details-due-date');
 
+        const taskList = document.createElement('ul');
+        console.log('adding taskList');
+        taskList.classList.add('project-details-task-list');
+        project.tasks.forEach(task => {
+            const taskItem = document.createElement('li');
+            taskItem.textContent = task.name;
+            taskItem.classList.add('project-details-task-item');
+            taskList.appendChild(taskItem);
+            console.log('adding task items')
+        })
+        
         projectDetails.appendChild(projectName);
         projectDetails.appendChild(projectDescription);
         projectDetails.appendChild(projectDueDate);
+        projectDetails.appendChild(taskList);
 
         layoutSection.appendChild(projectDetails);
-    }
-}
-
-export function handleProjectItemClick(event) {
-    const clickedElement = event.target.closest('.project-list-item');
-    if (clickedElement) {
-        const projectName = clickedElement.textContent;
-        const project = projectLibrary.find(proj => proj.name === projectName);
-
-        if (project) {
-            renderProjectDetails(project)
-        } else {
-            console.error('Project not found in projectLibrary');
-        }
     }
 }
 

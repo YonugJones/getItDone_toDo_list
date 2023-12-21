@@ -31,9 +31,8 @@ export function handleDeleteProject() {
         renderProjectLibrary();
         renderProjectListDisplay();
     } else {
-        console.error('Project not found in projectLibrary');
-        renderProjectLibrary();
-        renderProjectListDisplay();
+        alert('Project not found in projectLibrary');
+        return;
     }
 }
 
@@ -89,6 +88,7 @@ export function handleAddTaskToProject() {
     } else {
         console.error('Task or Project not found');
         renderProjectLibrary();
+        renderProjectListDisplay();
     }
 }
 
