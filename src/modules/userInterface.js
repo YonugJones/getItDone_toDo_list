@@ -1,4 +1,4 @@
-import { renderProjectLibrary, renderTaskLibrary, renderProjectListDisplay, renderProjectDetails } from "./domManipulation";
+import { renderProjectLibrary, renderTaskLibrary, renderProjectListDisplay, renderProjectDetails, renderAllTasks, clearLayout } from "./domManipulation";
 import { Project, projectLibrary } from "./projects";
 import { Task, taskLibrary } from "./tasks";
 
@@ -85,6 +85,8 @@ export function handleAddTaskToProject() {
         console.log(`Adding Task: ${task.name} into Project: ${project.name}`);
         project.tasks.push(task);
         renderProjectLibrary();
+        renderProjectListDisplay();
+        renderProjectDetails(project);
     } else {
         console.error('Task or Project not found');
         renderProjectLibrary();
@@ -115,6 +117,9 @@ export function handleRemoveTaskFromProject() {
 }
 
 export function assignHandler() {
+    const allTasksButton = document.getElementById('all-tasks-button');
+    allTasksButton.addEventListener('click', renderAllTasks);
+
     const createProjectButton = document.getElementById('create-project-button');
     createProjectButton.addEventListener('click', handleCreateProject);
 

@@ -2,6 +2,11 @@ import { projectLibrary } from "./projects";
 import { taskLibrary } from "./tasks";
 import { assignHandler } from "./userInterface";
 
+export function clearLayout() {
+    const layoutSection = document.getElementById('layout-section');
+    layoutSection.textContent = ''
+}
+
 export function renderProjectLibrary() {
     console.log('Project Library:', projectLibrary);
 }
@@ -40,14 +45,12 @@ export function renderProjectDetails(project) {
         projectDueDate.classList.add('project-details-due-date');
 
         const taskList = document.createElement('ul');
-        console.log('adding taskList');
         taskList.classList.add('project-details-task-list');
         project.tasks.forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.textContent = task.name;
             taskItem.classList.add('project-details-task-item');
             taskList.appendChild(taskItem);
-            console.log('adding task items')
         })
         
         projectDetails.appendChild(projectName);
@@ -56,6 +59,28 @@ export function renderProjectDetails(project) {
         projectDetails.appendChild(taskList);
 
         layoutSection.appendChild(projectDetails);
+    }
+}
+
+export function renderAllTasks() {
+    const layoutSection = document.getElementById('layout-section');
+    layoutSection.textContent = '';
+
+    if (taskLibrary.length === 0) {
+        const noTasks = document.createElement('h2');
+        noTasks.textContent = 'There are no tasks'
+        layoutSection.appendChild(noTasks);
+    } else {
+        const taskList = document.createElement('ul');
+        taskList.classList.add('project-details-task-list');
+        taskLibrary.forEach(task => {
+            const taskItem = document.createElement('li');
+            taskItem.textContent = task.name;
+            taskItem.classList.add('project-details-task-item');
+            taskList.appendChild(taskItem);
+        });
+
+        layoutSection.appendChild(taskList);
     }
 }
 
