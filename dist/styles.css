@@ -25,7 +25,7 @@ body {
     background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
     color: var(--font-color);
     margin: 0;
-    padding-top: 128px; 
+    padding-top: 138px; 
     font-family: monospace;
     text-shadow: 0 0 5px #C8C8C8;
     font-size: 1.3rem;
@@ -74,6 +74,8 @@ main {
     padding: 15px;
 }
 
+/* SORT BY SECTION */
+
 #sort {
     display: flex;
     flex-direction: column;
@@ -87,10 +89,7 @@ main {
     flex-direction: column;
 }
 
-#layout {
-    border: 2px solid var(--font-color);
-    border-radius: 2px;
-}
+/* PROJECT LIST SECTION */
 
 .project-section {
     text-align: center;
@@ -121,12 +120,45 @@ main {
     border-radius: 2px;
     color: white;
     text-shadow: 0 0 5px var(--font-color-active);
-    /* background-color: var(--background-color-thin); */
 }
 
 .project-details-task-list {
     list-style: none;
 }
+
+/* CREATE PROJECT FORM  */
+
+#create-project-fieldset {
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+#create-project-form > fieldset > * {
+    margin-bottom: 15px;
+    border: none;
+}
+
+#create-project-fieldset input,
+#create-project-fieldset textarea {
+    background: var(--font-color-fade);
+    color: var(--font-color);
+}
+
+#create-project-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+/* LAYOUT */
+#layout {
+    border: 2px solid var(--font-color);
+    border-radius: 2px;
+}
+
+/* GENERAL BUTTONS */
 
 button {
     cursor: pointer;

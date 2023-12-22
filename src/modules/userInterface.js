@@ -1,24 +1,26 @@
-import { renderProjectLibrary, renderTaskLibrary, renderProjectListDisplay, renderProjectDetails, renderAllTasks, clearLayout } from "./domManipulation";
+import { renderProjectLibrary, renderTaskLibrary, renderProjectListDisplay, renderProjectDetails, renderAllTasks, renderCreateProjectForm } from "./domManipulation";
 import { Project, projectLibrary } from "./projects";
 import { Task, taskLibrary } from "./tasks";
 
 export function handleCreateProject() {
-    const projectName = prompt('Enter project name:');
+    const projectName = document.getElementById('pname').value;
+    const projectDescription = document.getElementById('pdescription').value;
+    const projectDueDate = document.getElementById('pduedate').value;
 
+    const newProject = new Project(projectName, projectDescription, projectDueDate);
     const projectExists = projectLibrary.some(proj => proj.name === projectName)
 
-    if (projectExists) {
+    if (projectName === '') {
+        alert('Project Name cannot be blank');
+        return;
+    } else if (projectExists) {
         alert('Project name already taken. Please choose a new one.');
         return;
     }
-
-    const projectDescription = prompt('Enter project description;');
-    const projectDueDate = prompt('Enter project due date:');
-
-    const newProject = new Project(projectName, projectDescription, projectDueDate);
     newProject.addToProjectLibrary();
     renderProjectLibrary();
     renderProjectListDisplay();
+    renderProjectDetails(newProject);
 }
 
 export function handleDeleteProject() {
@@ -121,7 +123,7 @@ export function assignHandler() {
     allTasksButton.addEventListener('click', renderAllTasks);
 
     const createProjectButton = document.getElementById('create-project-button');
-    createProjectButton.addEventListener('click', handleCreateProject);
+    createProjectButton.addEventListener('click', renderCreateProjectForm);
 
     const deleteProjectButton = document.getElementById('delete-project-button');
     deleteProjectButton.addEventListener('click', handleDeleteProject);
