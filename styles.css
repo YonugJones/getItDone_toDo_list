@@ -26,7 +26,7 @@ body {
     color: var(--font-color);
     margin: 0;
     padding-top: 138px; 
-    font-family: monospace;
+    font-family: 'VT323';
     text-shadow: 0 0 5px #C8C8C8;
     font-size: 1.3rem;
 }
@@ -122,40 +122,67 @@ main {
     text-shadow: 0 0 5px var(--font-color-active);
 }
 
-.project-details-task-list {
-    list-style: none;
+/* DISPLAY */
+
+
+#layout {
+    border: 2px solid var(--font-color);
+    border-radius: 2px;
 }
 
-/* CREATE PROJECT FORM  */
+.project-details {
+    padding: 10px;
+}
 
-#create-project-fieldset {
+.no-tasks-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.project-details-task-list {
+    list-style: none;
+    padding: 10px;
+}
+
+.project-details-task-item:hover {
+    cursor: pointer;
+    color: white;
+    text-shadow: 0 0 5px var(--font-color-active);
+}
+
+/* CREATE PROJECT/TASK FORM  */
+
+#create-project-fieldset,
+#create-task-fieldset {
     display: flex;
     flex-direction: column;
     border: none;
 }
 
-#create-project-form > fieldset > * {
+#create-project-form > fieldset > *,
+#create-task-form > fieldset > * {
     margin-bottom: 15px;
     border: none;
 }
 
 #create-project-fieldset input,
-#create-project-fieldset textarea {
+#create-project-fieldset textarea,
+#create-task-fieldset input,
+#create-task-fieldset textarea,
+#create-task-fieldset select {
     background: var(--font-color-fade);
     color: var(--font-color);
 }
 
-#create-project-buttons {
+#create-project-buttons,
+#create-task-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
-}
-
-/* LAYOUT */
-#layout {
-    border: 2px solid var(--font-color);
-    border-radius: 2px;
+    border-style: none;
 }
 
 /* GENERAL BUTTONS */
@@ -167,7 +194,7 @@ button {
     font-weight: bold;
     border-style: none;
     /* border-radius: 20px; */
-    font-family: monospace;
+    font-family: 'VT323';
     color: var(--font-color);
     background: none;
     font-size: 1.3rem;
