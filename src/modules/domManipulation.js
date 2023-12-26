@@ -1,6 +1,6 @@
 import { projectLibrary } from "./projects";
 import { taskLibrary } from "./tasks";
-import { assignHandler, handleCreateProject } from "./userInterface";
+import { assignHandler, handleAddTaskToProject, handleCreateProject } from "./userInterface";
 
 export function renderProjectLibrary() {
     console.log('Project Library:', projectLibrary);
@@ -64,12 +64,13 @@ export function renderCreateProjectForm() {
     cancelButton.setAttribute('type', 'button');
     cancelButton.setAttribute('id', 'create-project-cancel-button');
     cancelButton.textContent = 'Cancel';
+    
 
     const submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'button');
     submitButton.setAttribute('id', 'create-project-submit-button');
     submitButton.textContent = 'Submit';
-    submitButton.addEventListener('click', handleCreateProject);
+    
 
     projectFormFieldset.appendChild(legend);
     projectFormFieldset.appendChild(projectNamelabel);
@@ -78,6 +79,7 @@ export function renderCreateProjectForm() {
     projectFormFieldset.appendChild(projectDescriptionTextArea);
     projectFormFieldset.appendChild(projectDueDateLabel);
     projectFormFieldset.appendChild(projectDueDateInput);
+
     buttonFieldset.appendChild(cancelButton);
     buttonFieldset.appendChild(submitButton);
 
@@ -85,6 +87,96 @@ export function renderCreateProjectForm() {
     projectForm.appendChild(buttonFieldset);
 
     layoutSection.appendChild(projectForm);
+
+    assignHandler();
+}
+
+export function renderCreateTaskForm() {
+    const addTaskSection = document.querySelector('.add-task-section');
+    const addTaskButton = document.getElementById('add-task-button');
+    addTaskButton.style.display = 'none';
+
+    const taskForm = document.createElement('form');
+    taskForm.setAttribute('id', 'create-task-form');
+
+    const taskFormFieldset = document.createElement('fieldset');
+    taskFormFieldset.setAttribute('id', 'create-task-fieldset');
+
+    const legend = document.createElement('legend');
+    legend.textContent = 'Create Task:';
+
+    const tasktNamelabel = document.createElement('label');
+    tasktNamelabel.setAttribute('for', 'tname');
+    tasktNamelabel.textContent = 'Task Name:';
+
+    const taskNameInput = document.createElement('input');
+    taskNameInput.setAttribute('type', 'text');
+    taskNameInput.setAttribute('id', 'tname');
+    taskNameInput.setAttribute('name', 'tname');
+
+    const taskDueDateLabel = document.createElement('label');
+    taskDueDateLabel.setAttribute('for', 'tduedate');
+    taskDueDateLabel.textContent = 'Task Due Date:';
+
+    const taskDueDateInput = document.createElement('input');
+    taskDueDateInput.setAttribute('type', 'date');
+    taskDueDateInput.setAttribute('id', 'tduedate');
+    taskDueDateInput.setAttribute('name', 'tduedate');
+
+    const taskPriorityLabel = document.createElement('label');
+    taskPriorityLabel.setAttribute('for', 'tpriority');
+    taskPriorityLabel.textContent = 'Task Priority:';
+
+    const taskPrioritySelect = document.createElement('select');
+    taskPrioritySelect.setAttribute('id', 'tpriority');
+    taskPrioritySelect.setAttribute('name', 'tpriority');
+
+    const taskPriorityHigh = document.createElement('option');
+    taskPriorityHigh.setAttribute('value', 'High');
+    taskPriorityHigh.textContent = 'High';
+
+    const taskPriorityMedium = document.createElement('option');
+    taskPriorityMedium.setAttribute('value', 'Medium');
+    taskPriorityMedium.textContent = 'Medium';
+
+    const taskPriorityLow = document.createElement('option');
+    taskPriorityLow.setAttribute('value', 'Low');
+    taskPriorityLow.textContent = 'Low';
+
+    const buttonFieldset = document.createElement('fieldset');
+    buttonFieldset.setAttribute('id', 'create-task-buttons');
+
+    const cancelButton = document.createElement('button');
+    cancelButton.setAttribute('type', 'button');
+    cancelButton.setAttribute('id', 'create-task-cancel-button');
+    cancelButton.textContent = 'Cancel';
+    
+    const submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'button');
+    submitButton.setAttribute('id', 'create-task-submit-button');
+    submitButton.textContent = 'Submit';
+
+    taskFormFieldset.appendChild(legend);
+    taskFormFieldset.appendChild(tasktNamelabel);
+    taskFormFieldset.appendChild(taskNameInput);
+    taskFormFieldset.appendChild(taskDueDateLabel);
+    taskFormFieldset.appendChild(taskDueDateInput);
+    taskFormFieldset.appendChild(taskPriorityLabel);
+    taskFormFieldset.appendChild(taskPrioritySelect);
+
+    taskPrioritySelect.appendChild(taskPriorityHigh);
+    taskPrioritySelect.appendChild(taskPriorityMedium);
+    taskPrioritySelect.appendChild(taskPriorityLow);
+
+    buttonFieldset.appendChild(cancelButton);
+    buttonFieldset.appendChild(submitButton);
+
+    taskForm.appendChild(taskFormFieldset);
+    taskForm.appendChild(buttonFieldset);
+
+    addTaskSection.appendChild(taskForm);
+
+    assignHandler();
 }
 
 export function renderProjectDetails(project) {
@@ -114,7 +206,15 @@ export function renderProjectDetails(project) {
             taskItem.textContent = task.name;
             taskItem.classList.add('project-details-task-item');
             taskList.appendChild(taskItem);
-        })
+        });
+
+        const addTaskSection = document.createElement('div');
+        addTaskSection.classList.add('add-task-section');
+
+        const addTaskButton = document.createElement('button');
+        addTaskButton.setAttribute('id', 'add-task-button');
+        addTaskButton.textContent = 'Add Task';
+        addTaskButton.addEventListener('click', renderCreateTaskForm);
         
         projectDetails.appendChild(projectName);
         projectDetails.appendChild(projectDescription);
@@ -122,6 +222,9 @@ export function renderProjectDetails(project) {
         projectDetails.appendChild(taskList);
 
         layoutSection.appendChild(projectDetails);
+
+        addTaskSection.appendChild(addTaskButton)
+        layoutSection.appendChild(addTaskSection);
     }
 }
 
@@ -130,9 +233,12 @@ export function renderAllTasks() {
     layoutSection.textContent = '';
 
     if (taskLibrary.length === 0) {
+        const noTasksDiv = document.createElement('div');
+        noTasksDiv.classList.add('no-tasks-display')
         const noTasks = document.createElement('h2');
         noTasks.textContent = 'There are no tasks'
-        layoutSection.appendChild(noTasks);
+        noTasksDiv.appendChild(noTasks);
+        layoutSection.appendChild(noTasksDiv);
     } else {
         const taskList = document.createElement('ul');
         taskList.classList.add('project-details-task-list');
