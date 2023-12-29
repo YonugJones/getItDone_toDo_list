@@ -26,7 +26,7 @@ body {
     color: var(--font-color);
     margin: 0;
     padding-top: 138px; 
-    font-family: 'VT323';
+    font-family: 'Inconsolata';
     text-shadow: 0 0 5px #C8C8C8;
     font-size: 1.3rem;
 }
@@ -134,11 +134,12 @@ main {
     padding: 10px;
 }
 
-.no-tasks-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.project-details-name {
+    margin-bottom: 15px;
+}
+
+.project-details-description {
+    margin-bottom: 5px;
 }
 
 .project-details-task-list {
@@ -146,10 +147,37 @@ main {
     padding: 10px;
 }
 
+.project-details-task-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; 
+}
+
+.task-item-info {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid var(--font-color);
+    padding: 5px;
+    width: 90%;
+}
+
 .project-details-task-item:hover {
     cursor: pointer;
     color: white;
     text-shadow: 0 0 5px var(--font-color-active);
+}
+
+.task-item-duedate,
+.task-item-priority {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.no-tasks-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 /* CREATE PROJECT/TASK FORM  */
@@ -193,8 +221,7 @@ button {
     font-size: 15px;
     font-weight: bold;
     border-style: none;
-    /* border-radius: 20px; */
-    font-family: 'VT323';
+    font-family: 'Inconsolata';
     color: var(--font-color);
     background: none;
     font-size: 1.3rem;
