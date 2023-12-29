@@ -15,6 +15,8 @@ export function renderProjectListDisplay() {
         projectListItem.textContent = proj.name;
         projectList.appendChild(projectListItem);
     })
+
+    assignHandler();
 }
 
 export function renderCreateProjectForm() {
@@ -159,10 +161,10 @@ export function renderCreateTaskForm() {
     taskFormFieldset.appendChild(legend);
     taskFormFieldset.appendChild(tasktNamelabel);
     taskFormFieldset.appendChild(taskNameInput);
-    taskFormFieldset.appendChild(taskDueDateLabel);
-    taskFormFieldset.appendChild(taskDueDateInput);
     taskFormFieldset.appendChild(taskPriorityLabel);
     taskFormFieldset.appendChild(taskPrioritySelect);
+    taskFormFieldset.appendChild(taskDueDateLabel);
+    taskFormFieldset.appendChild(taskDueDateInput);
 
     taskPrioritySelect.appendChild(taskPriorityHigh);
     taskPrioritySelect.appendChild(taskPriorityMedium);
@@ -196,15 +198,45 @@ export function renderProjectDetails(project) {
         projectDescription.classList.add('project-details-description')
 
         const projectDueDate = document.createElement('p');
-        projectDueDate.textContent = project.dueDate;
+        projectDueDate.textContent = `Due date: ${project.dueDate}`;
         projectDueDate.classList.add('project-details-due-date');
 
         const taskList = document.createElement('ul');
         taskList.classList.add('project-details-task-list');
         project.tasks.forEach(task => {
             const taskItem = document.createElement('li');
-            taskItem.textContent = task.name;
             taskItem.classList.add('project-details-task-item');
+
+            const taskItemInfo = document.createElement('div');
+            taskItemInfo.classList.add('task-item-info');
+
+            const taskItemButtons = document.createElement('div');
+            taskItemButtons.classList.add('task-item-buttons');
+    
+            const taskItemName = document.createElement('div');
+            taskItemName.textContent = task.name;
+            taskItemName.classList.add('task-item-name')
+            const taskItemPriority = document.createElement('div');
+            taskItemPriority.textContent = task.priority;
+            taskItemPriority.classList.add('task-item-priority');
+            const taskItemDueDate = document.createElement('div');
+            taskItemDueDate.textContent = task.dueDate;
+            taskItemDueDate.classList.add('task-item-duedate');
+
+            const taskItemDelete = document.createElement('button');
+            taskItemDelete.setAttribute('type', 'button');
+            taskItemDelete.setAttribute('class', 'task-item-delete');
+            taskItemDelete.textContent = 'DELETE';
+            
+            taskItemInfo.appendChild(taskItemName);
+            taskItemInfo.appendChild(taskItemDueDate);
+            taskItemInfo.appendChild(taskItemPriority);
+
+            taskItemButtons.appendChild(taskItemDelete);
+
+            taskItem.appendChild(taskItemInfo);
+            taskItem.appendChild(taskItemButtons);
+
             taskList.appendChild(taskItem);
         });
 
@@ -226,6 +258,8 @@ export function renderProjectDetails(project) {
         addTaskSection.appendChild(addTaskButton)
         layoutSection.appendChild(addTaskSection);
     }
+    
+    assignHandler();
 }
 
 export function renderAllTasks() {
@@ -244,13 +278,45 @@ export function renderAllTasks() {
         taskList.classList.add('project-details-task-list');
         taskLibrary.forEach(task => {
             const taskItem = document.createElement('li');
-            taskItem.textContent = task.name;
             taskItem.classList.add('project-details-task-item');
+
+            const taskItemInfo = document.createElement('div');
+            taskItemInfo.classList.add('task-item-info');
+
+            const taskItemButtons = document.createElement('div');
+            taskItemButtons.classList.add('task-item-buttons');
+    
+            const taskItemName = document.createElement('div');
+            taskItemName.textContent = task.name;
+            taskItemName.classList.add('task-item-name')
+            const taskItemPriority = document.createElement('div');
+            taskItemPriority.textContent = task.priority;
+            taskItemPriority.classList.add('task-item-priority');
+            const taskItemDueDate = document.createElement('div');
+            taskItemDueDate.textContent = task.dueDate;
+            taskItemDueDate.classList.add('task-item-duedate');
+
+            const taskItemDelete = document.createElement('button');
+            taskItemDelete.setAttribute('type', 'button');
+            taskItemDelete.setAttribute('class', 'task-item-delete');
+            taskItemDelete.textContent = 'DELETE';
+            
+            taskItemInfo.appendChild(taskItemName);
+            taskItemInfo.appendChild(taskItemDueDate);
+            taskItemInfo.appendChild(taskItemPriority);
+            
+            taskItemButtons.appendChild(taskItemDelete);
+
+            taskItem.appendChild(taskItemInfo);
+            taskItem.appendChild(taskItemButtons);
+
             taskList.appendChild(taskItem);
         });
 
         layoutSection.appendChild(taskList);
     }
+
+    assignHandler();
 }
 
 export function renderTaskLibrary() {

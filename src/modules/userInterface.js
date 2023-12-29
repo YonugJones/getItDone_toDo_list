@@ -79,11 +79,8 @@ export function handleDeleteTask() {
 export function handleAddTaskToProject() {
     const taskName = document.getElementById('tname').value;
     const task = taskLibrary.find(t => t.name === taskName);
-
-    // update HERE
     const projectName = document.querySelector('.project-details-name').textContent;
     const project = projectLibrary.find(proj => proj.name === projectName);
-    // console.log(`Adding Task: ${task.name} into Project: ${project.name}`);
     project.tasks.push(task);
     renderProjectLibrary();
     renderProjectDetails(project);
@@ -119,20 +116,9 @@ export function assignHandler() {
     const deleteProjectButton = document.getElementById('delete-project-button');
     deleteProjectButton.addEventListener('click', handleDeleteProject);
 
-    const createTaskButton = document.getElementById('create-task-button');
-    createTaskButton.addEventListener('click', handleCreateTask);
-
-    const deleteTaskButton = document.getElementById('delete-task-button');
-    deleteTaskButton.addEventListener('click', handleDeleteTask);
-
-    const addTaskToProjectButton = document.getElementById('add-task-to-project-button');
-    addTaskToProjectButton.addEventListener('click', handleAddTaskToProject);
-
-    const removeTaskFromProjectButton = document.getElementById('remove-task-from-project-button');
-    removeTaskFromProjectButton.addEventListener('click', handleRemoveTaskFromProject);
-
     const projectList = document.getElementById('project-list');
     projectList.addEventListener('click', handleProjectListItemClick);
+
 
     // DYNAMICALLY CREATED BUTTONS PROJECT FORM
     const projectForm = document.getElementById('create-project-form');
@@ -153,10 +139,16 @@ export function assignHandler() {
     if (taskForm) {
         const submitButton = document.getElementById('create-task-submit-button');
         submitButton.addEventListener('click', () => {
-            handleCreateTask();
-            handleAddTaskToProject();
-            taskSection.removeChild(taskForm);
-            addTaskButton.style.display = '';
+            const taskName = document.getElementById('tname').value;
+            if (taskName !== '') {
+                handleCreateTask();
+                handleAddTaskToProject();
+                taskSection.removeChild(taskForm);
+                addTaskButton.style.display = '';
+            } else {
+                alert('Task Name cannot be empty');
+                return;
+            }    
         })
         const cancelButton = document.getElementById('create-task-cancel-button');
         cancelButton.addEventListener('click', () => {
@@ -164,5 +156,40 @@ export function assignHandler() {
             addTaskButton.style.display = '';
         })
     };
-    
+
+    // DYNAMICALLY CREATED BUTTONS FOR TASK LIST
+    const taskList = document.querySelector('.project-details-task-list');
+
+    if (taskList) {
+        taskList.addEventListener('click', (event) => {
+            const deleteButton = event.target.closest('.task-item-delete');
+            if (deleteButton) {
+                const taskItem = deleteButton.closest('.project-details-task-item');
+                const taskName = taskItem.querySelector('.task-item-name').textContent;
+
+                const task = taskLibrary.find(t => t.name === taskName);
+
+                const projectName = document.querySelector('.project-details-name').textContent;
+                const project = projectLibrary.find(proj => proj.name === projectName);
+
+                if (task && project) {
+                    const index = project.tasks.indexOf(task);
+                    if (index !== -1) {
+                        project.tasks.splice(index, 1);
+                        console.log(`Removed Task: ${task.name} from Project: ${project.name}`);
+                        renderProjectLibrary();
+                        renderProjectDetails(project);
+                    }
+
+                    const taskIndex = taskLibrary.indexOf(task);
+                    if (taskIndex !== -1) {
+                        task.removeFromTaskLibrary();
+                        renderTaskLibrary();
+                    }
+                } else {
+                    console.error('Task and/or Project not found');
+                }
+            }
+        });
+    }
 }
