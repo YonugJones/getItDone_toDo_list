@@ -1,6 +1,6 @@
 import { renderProjectLibrary, renderTaskLibrary, renderProjectListDisplay, renderProjectDetails, renderAllTasks, renderCreateProjectForm } from "./domManipulation";
 import { Project, projectLibrary } from "./projects";
-import { Task, taskLibrary } from "./tasks";
+import { Task, findTaskById, taskLibrary } from "./tasks";
 
 export function handleCreateProject() {
     const projectName = document.getElementById('pname').value;
@@ -78,12 +78,31 @@ export function handleDeleteTask() {
 
 export function handleAddTaskToProject() {
     const taskName = document.getElementById('tname').value;
-    const task = taskLibrary.find(t => t.name === taskName);
+    const taskDueDate = document.getElementById('tduedate').value;
+    const taskPriority = document.getElementById('tpriority').value;
+
+    const newTask = new Task(taskName, taskDueDate, taskPriority); 
+    const taskId = newTask.id;
+
+    newTask.addToTaskLibrary();
+    
     const projectName = document.querySelector('.project-details-name').textContent;
     const project = projectLibrary.find(proj => proj.name === projectName);
-    project.tasks.push(task);
-    renderProjectLibrary();
-    renderProjectDetails(project);
+
+    if (project) {
+        const task = findTaskById(taskId)
+
+        if (task) {
+            project.tasks.push(task);
+            renderProjectLibrary();
+            renderProjectDetails(project);
+        } else {
+            console.error(`Task with ID ${taskId} not found`);
+        }
+
+    } else {
+        console.error(`Project with name ${projectName} not found in projectLibrary`);
+    }
 }
 
 export function handleRemoveTaskFromProject() {
@@ -107,20 +126,21 @@ export function handleRemoveTaskFromProject() {
 }
 
 export function assignHandler() {
+
+    // STATIC BUTTONS
     const allTasksButton = document.getElementById('all-tasks-button');
     allTasksButton.addEventListener('click', renderAllTasks);
 
     const createProjectButton = document.getElementById('create-project-button');
     createProjectButton.addEventListener('click', renderCreateProjectForm);
 
-    const deleteProjectButton = document.getElementById('delete-project-button');
-    deleteProjectButton.addEventListener('click', handleDeleteProject);
-
     const projectList = document.getElementById('project-list');
     projectList.addEventListener('click', handleProjectListItemClick);
 
 
-    // DYNAMICALLY CREATED BUTTONS PROJECT FORM
+    
+    // DYNAMICALLY BUTTONS 
+    // PROJECT FORM
     const projectForm = document.getElementById('create-project-form');
     if (projectForm) {
         const submitButton = document.getElementById('create-project-submit-button');
@@ -132,7 +152,8 @@ export function assignHandler() {
         })
     };
 
-    // DYNAMICALLY CREATED BUTTONS TASK FORM
+
+    // TASK FORM
     const taskForm = document.getElementById('create-task-form');
     const taskSection = document.querySelector('.add-task-section');
     const addTaskButton = document.getElementById('add-task-button');
@@ -141,7 +162,6 @@ export function assignHandler() {
         submitButton.addEventListener('click', () => {
             const taskName = document.getElementById('tname').value;
             if (taskName !== '') {
-                handleCreateTask();
                 handleAddTaskToProject();
                 taskSection.removeChild(taskForm);
                 addTaskButton.style.display = '';
@@ -157,37 +177,31 @@ export function assignHandler() {
         })
     };
 
-    // DYNAMICALLY CREATED BUTTONS FOR TASK LIST
-    const taskList = document.querySelector('.project-details-task-list');
 
+    // TASK LIST
+    const taskList = document.querySelector('.project-details-task-list');
     if (taskList) {
         taskList.addEventListener('click', (event) => {
             const deleteButton = event.target.closest('.task-item-delete');
             if (deleteButton) {
-                const taskItem = deleteButton.closest('.project-details-task-item');
-                const taskName = taskItem.querySelector('.task-item-name').textContent;
-
-                const task = taskLibrary.find(t => t.name === taskName);
-
-                const projectName = document.querySelector('.project-details-name').textContent;
-                const project = projectLibrary.find(proj => proj.name === projectName);
-
-                if (task && project) {
-                    const index = project.tasks.indexOf(task);
-                    if (index !== -1) {
-                        project.tasks.splice(index, 1);
-                        console.log(`Removed Task: ${task.name} from Project: ${project.name}`);
+                const taskItem = deleteButton.closest('.project-details-task-item');   
+                const taskId = taskItem.dataset.taskId;
+                const task = taskLibrary.find(t => t.id === taskId);
+                const projectContainingTask = projectLibrary.find(proj => proj.tasks.some(t => t.id === taskId));
+                if (task && projectContainingTask) {
+                    const projectTaskIndex = projectContainingTask.tasks.findIndex(t => t.id === taskId);
+                    if (projectTaskIndex !== -1) {
+                        projectContainingTask.tasks.splice(projectTaskIndex, 1);
                         renderProjectLibrary();
-                        renderProjectDetails(project);
-                    }
-
-                    const taskIndex = taskLibrary.indexOf(task);
-                    if (taskIndex !== -1) {
-                        task.removeFromTaskLibrary();
-                        renderTaskLibrary();
+                        renderProjectDetails(projectContainingTask);
                     }
                 } else {
                     console.error('Task and/or Project not found');
+                }
+                const taskIndex = taskLibrary.indexOf(task);
+                if (taskIndex !== -1) {
+                    task.removeFromTaskLibrary();
+                    renderTaskLibrary();
                 }
             }
         });

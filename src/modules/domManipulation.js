@@ -2,10 +2,6 @@ import { projectLibrary } from "./projects";
 import { taskLibrary } from "./tasks";
 import { assignHandler, handleAddTaskToProject, handleCreateProject } from "./userInterface";
 
-export function renderProjectLibrary() {
-    console.log('Project Library:', projectLibrary);
-}
-
 export function renderProjectListDisplay() {
     const projectList = document.getElementById('project-list');
     projectList.textContent = '';
@@ -189,9 +185,19 @@ export function renderProjectDetails(project) {
         const projectDetails = document.createElement('div');
         projectDetails.classList.add('project-details');
 
+        const projectHeader = document.createElement('div');
+        projectHeader.classList.add('project-details-header');
+
         const projectName = document.createElement('h2');
         projectName.textContent = project.name;
         projectName.classList.add('project-details-name');
+
+        const projectButtons = document.createElement('div');
+        projectButtons.classList.add('project-details-buttons');
+
+        const projectDelete = document.createElement('button');
+        projectDelete.setAttribute('type', 'button');
+        projectDelete.textContent = 'DELETE';
 
         const projectDescription = document.createElement('p');
         projectDescription.textContent = project.description;
@@ -206,6 +212,7 @@ export function renderProjectDetails(project) {
         project.tasks.forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.classList.add('project-details-task-item');
+            taskItem.setAttribute('data-task-id', task.id);
 
             const taskItemInfo = document.createElement('div');
             taskItemInfo.classList.add('task-item-info');
@@ -248,7 +255,12 @@ export function renderProjectDetails(project) {
         addTaskButton.textContent = 'Add Task';
         addTaskButton.addEventListener('click', renderCreateTaskForm);
         
-        projectDetails.appendChild(projectName);
+        projectHeader.appendChild(projectName);
+
+        projectButtons.appendChild(projectDelete);
+        projectHeader.appendChild(projectButtons);
+
+        projectDetails.appendChild(projectHeader);
         projectDetails.appendChild(projectDescription);
         projectDetails.appendChild(projectDueDate);
         projectDetails.appendChild(taskList);
@@ -258,7 +270,7 @@ export function renderProjectDetails(project) {
         addTaskSection.appendChild(addTaskButton)
         layoutSection.appendChild(addTaskSection);
     }
-    
+
     assignHandler();
 }
 
@@ -279,6 +291,7 @@ export function renderAllTasks() {
         taskLibrary.forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.classList.add('project-details-task-item');
+            taskItem.setAttribute('data-task-id', task.id);
 
             const taskItemInfo = document.createElement('div');
             taskItemInfo.classList.add('task-item-info');
@@ -317,6 +330,10 @@ export function renderAllTasks() {
     }
 
     assignHandler();
+}
+
+export function renderProjectLibrary() {
+    console.log('Project Library:', projectLibrary);
 }
 
 export function renderTaskLibrary() {

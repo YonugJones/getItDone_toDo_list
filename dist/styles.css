@@ -134,7 +134,10 @@ main {
     padding: 10px;
 }
 
-.project-details-name {
+.project-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
 }
 
