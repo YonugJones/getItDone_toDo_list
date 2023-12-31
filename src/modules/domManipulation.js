@@ -197,6 +197,7 @@ export function renderProjectDetails(project) {
 
         const projectDelete = document.createElement('button');
         projectDelete.setAttribute('type', 'button');
+        projectDelete.classList.add('project-delete-button');
         projectDelete.textContent = 'DELETE';
 
         const projectDescription = document.createElement('p');

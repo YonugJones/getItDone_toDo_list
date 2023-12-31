@@ -176,7 +176,8 @@ main {
     align-items: flex-end;
 }
 
-.no-tasks-display {
+.no-tasks-display,
+.no-project-display {
     display: flex;
     align-items: center;
     justify-content: center;

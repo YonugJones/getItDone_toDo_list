@@ -140,6 +140,7 @@ export function assignHandler() {
 
 
     // DYNAMICALLY BUTTONS 
+
     // PROJECT FORM
     const projectForm = document.getElementById('create-project-form');
     if (projectForm) {
@@ -209,5 +210,41 @@ export function assignHandler() {
                 }   
             }
         });
+    }
+
+    // Project Header delete
+    const projectHeader = document.querySelector('.project-details-header');
+    if (projectHeader) {
+        const projectDeleteButton = document.querySelector('.project-delete-button');
+        projectDeleteButton.addEventListener('click', () => {
+            const projectName = document.querySelector('.project-details-name').textContent;
+            const projectIndex = projectLibrary.findIndex(proj => proj.name === projectName);
+            if (projectIndex !== -1) {
+                const tasksToDelete = projectLibrary[projectIndex].tasks;
+                tasksToDelete.forEach(task => {
+                    const taskIndex = taskLibrary.findIndex(t => t.id === task.Id);
+                    if (taskIndex !== -1) {
+                        taskLibrary.splice(taskIndex, 1);
+                    }
+                });
+
+                projectLibrary.splice(projectIndex, 1);
+                renderProjectLibrary();
+                renderTaskLibrary();
+                renderProjectListDisplay();
+                const layout = document.getElementById('layout-section');
+                layout.textContent = '';
+
+                const noProjectDisplayDiv = document.createElement('div');
+                noProjectDisplayDiv.classList.add('no-project-display');
+                layout.appendChild(noProjectDisplayDiv);
+
+                const noProjectDisplay = document.createElement('h2');
+                noProjectDisplay.textContent = 'No Project Selected';
+                noProjectDisplayDiv.appendChild(noProjectDisplay);
+            } else {
+                console.error('Project Not Found');
+            }
+        })
     }
 }
