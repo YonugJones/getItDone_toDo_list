@@ -1,6 +1,12 @@
-import { renderProjectLibrary, renderTaskLibrary, renderLayout } from "./modules/domManipulation";
+import { renderLayout } from "./modules/domManipulation";
+import { removeFromLocalStorage } from "./modules/localStorage";
 
-
-renderProjectLibrary();
-renderTaskLibrary();
 renderLayout(); 
+
+//
+// WIPE LOCAL STORAGE BELOW //
+//
+
+// removeFromLocalStorage('taskLibrary');
+// removeFromLocalStorage('projectLibrary');
+

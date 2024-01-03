@@ -1,21 +1,24 @@
 import { projectLibrary } from "./projects";
 import { taskLibrary } from "./tasks";
-import { assignHandler, handleAddTaskToProject, handleCreateProject } from "./userInterface";
+import { assignHandler } from "./userInterface";
 
 export function renderProjectListDisplay() {
+    console.log('renderProjectListDisplay called');
+    //
     const projectList = document.getElementById('project-list');
     projectList.textContent = '';
+
     projectLibrary.forEach(proj => {
         const projectListItem = document.createElement('li');
         projectListItem.classList.add('project-list-item')
         projectListItem.textContent = proj.name;
         projectList.appendChild(projectListItem);
     })
-
-    assignHandler();
 }
 
 export function renderCreateProjectForm() {
+    console.log('renderCreateProjectForm called');
+    //
     const layoutSection = document.getElementById('layout-section');
     layoutSection.textContent = '';
 
@@ -62,13 +65,11 @@ export function renderCreateProjectForm() {
     cancelButton.setAttribute('type', 'button');
     cancelButton.setAttribute('id', 'create-project-cancel-button');
     cancelButton.textContent = 'Cancel';
-    
 
     const submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'button');
     submitButton.setAttribute('id', 'create-project-submit-button');
     submitButton.textContent = 'Submit';
-    
 
     projectFormFieldset.appendChild(legend);
     projectFormFieldset.appendChild(projectNamelabel);
@@ -90,7 +91,10 @@ export function renderCreateProjectForm() {
 }
 
 export function renderCreateTaskForm() {
+    console.log('renderCreateTaskForm called');
+    //
     const addTaskSection = document.querySelector('.add-task-section');
+
     const addTaskButton = document.getElementById('add-task-button');
     addTaskButton.style.display = 'none';
 
@@ -148,7 +152,7 @@ export function renderCreateTaskForm() {
     cancelButton.setAttribute('type', 'button');
     cancelButton.setAttribute('id', 'create-task-cancel-button');
     cancelButton.textContent = 'Cancel';
-    
+
     const submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'button');
     submitButton.setAttribute('id', 'create-task-submit-button');
@@ -178,6 +182,8 @@ export function renderCreateTaskForm() {
 }
 
 export function renderProjectDetails(project) {
+    console.log('renderProjectDetails called');
+    //
     const layoutSection = document.getElementById('layout-section');
     layoutSection.textContent = '';
 
@@ -202,7 +208,7 @@ export function renderProjectDetails(project) {
 
         const projectDescription = document.createElement('p');
         projectDescription.textContent = project.description;
-        projectDescription.classList.add('project-details-description')
+        projectDescription.classList.add('project-details-description');
 
         const projectDueDate = document.createElement('p');
         projectDueDate.textContent = `Due date: ${project.dueDate}`;
@@ -210,6 +216,7 @@ export function renderProjectDetails(project) {
 
         const taskList = document.createElement('ul');
         taskList.classList.add('project-details-task-list');
+
         project.tasks.forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.classList.add('project-details-task-item');
@@ -220,13 +227,15 @@ export function renderProjectDetails(project) {
 
             const taskItemButtons = document.createElement('div');
             taskItemButtons.classList.add('task-item-buttons');
-    
+
             const taskItemName = document.createElement('div');
             taskItemName.textContent = task.name;
-            taskItemName.classList.add('task-item-name')
+            taskItemName.classList.add('task-item-name');
+
             const taskItemPriority = document.createElement('div');
             taskItemPriority.textContent = task.priority;
             taskItemPriority.classList.add('task-item-priority');
+
             const taskItemDueDate = document.createElement('div');
             taskItemDueDate.textContent = task.dueDate;
             taskItemDueDate.classList.add('task-item-duedate');
@@ -235,7 +244,7 @@ export function renderProjectDetails(project) {
             taskItemDelete.setAttribute('type', 'button');
             taskItemDelete.setAttribute('class', 'task-item-delete');
             taskItemDelete.textContent = 'DELETE';
-            
+
             taskItemInfo.appendChild(taskItemName);
             taskItemInfo.appendChild(taskItemDueDate);
             taskItemInfo.appendChild(taskItemPriority);
@@ -255,10 +264,10 @@ export function renderProjectDetails(project) {
         addTaskButton.setAttribute('id', 'add-task-button');
         addTaskButton.textContent = 'Add Task';
         addTaskButton.addEventListener('click', renderCreateTaskForm);
-        
-        projectHeader.appendChild(projectName);
 
         projectButtons.appendChild(projectDelete);
+
+        projectHeader.appendChild(projectName);
         projectHeader.appendChild(projectButtons);
 
         projectDetails.appendChild(projectHeader);
@@ -266,29 +275,34 @@ export function renderProjectDetails(project) {
         projectDetails.appendChild(projectDueDate);
         projectDetails.appendChild(taskList);
 
-        layoutSection.appendChild(projectDetails);
+        addTaskSection.appendChild(addTaskButton);
 
-        addTaskSection.appendChild(addTaskButton)
+        layoutSection.appendChild(projectDetails);
         layoutSection.appendChild(addTaskSection);
     }
-
     assignHandler();
 }
 
 export function renderAllTasks() {
+    console.log('renderAllTasks called');
+    //
     const layoutSection = document.getElementById('layout-section');
     layoutSection.textContent = '';
 
     if (taskLibrary.length === 0) {
         const noTasksDiv = document.createElement('div');
-        noTasksDiv.classList.add('no-tasks-display')
+        noTasksDiv.classList.add('no-tasks-display');
+
         const noTasks = document.createElement('h2');
-        noTasks.textContent = 'There are no tasks'
+        noTasks.textContent = 'There are no tasks';
+
         noTasksDiv.appendChild(noTasks);
         layoutSection.appendChild(noTasksDiv);
+
     } else {
         const taskList = document.createElement('ul');
         taskList.classList.add('project-details-task-list');
+
         taskLibrary.forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.classList.add('project-details-task-item');
@@ -299,13 +313,15 @@ export function renderAllTasks() {
 
             const taskItemButtons = document.createElement('div');
             taskItemButtons.classList.add('task-item-buttons');
-    
+
             const taskItemName = document.createElement('div');
             taskItemName.textContent = task.name;
-            taskItemName.classList.add('task-item-name')
+            taskItemName.classList.add('task-item-name');
+
             const taskItemPriority = document.createElement('div');
             taskItemPriority.textContent = task.priority;
             taskItemPriority.classList.add('task-item-priority');
+
             const taskItemDueDate = document.createElement('div');
             taskItemDueDate.textContent = task.dueDate;
             taskItemDueDate.classList.add('task-item-duedate');
@@ -314,33 +330,34 @@ export function renderAllTasks() {
             taskItemDelete.setAttribute('type', 'button');
             taskItemDelete.setAttribute('class', 'task-item-delete');
             taskItemDelete.textContent = 'DELETE';
-            
+
             taskItemInfo.appendChild(taskItemName);
             taskItemInfo.appendChild(taskItemDueDate);
             taskItemInfo.appendChild(taskItemPriority);
-            
+
             taskItemButtons.appendChild(taskItemDelete);
 
             taskItem.appendChild(taskItemInfo);
             taskItem.appendChild(taskItemButtons);
-
+            
             taskList.appendChild(taskItem);
         });
-
         layoutSection.appendChild(taskList);
     }
-
     assignHandler();
 }
 
-export function renderProjectLibrary() {
-    console.log('Project Library:', projectLibrary);
+export function showProjectLibrary() {
+    console.log('projectLibrary called', projectLibrary);
 }
 
-export function renderTaskLibrary() {
-    console.log('Task Library:', taskLibrary);
+export function showTaskLibrary() {
+    console.log('taskLibrary called', taskLibrary);
 }
 
 export function renderLayout() {
+    console.log('renderLayout called');
+    //
+    renderProjectListDisplay();
     assignHandler();
 }
