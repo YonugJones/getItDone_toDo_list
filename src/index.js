@@ -1,7 +1,8 @@
 import { renderLayout } from "./modules/domManipulation";
-import { removeFromLocalStorage } from "./modules/localStorage";
+import { getFromLocalStorage ,removeFromLocalStorage } from "./modules/localStorage";
 
 renderLayout(); 
+
 
 //
 // WIPE LOCAL STORAGE BELOW //

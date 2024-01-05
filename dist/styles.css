@@ -129,11 +129,13 @@ main {
     border-radius: 2px;
 }
 
-.project-details {
+.project-details,
+.all-tasks-section {
     padding: 10px;
 }
 
-.project-details-header {
+.project-details-header,
+.all-tasks-header {
     display: flex;
     justify-content: space-between;
     align-items: center;

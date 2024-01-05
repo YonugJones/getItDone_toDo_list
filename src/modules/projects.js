@@ -1,8 +1,30 @@
-import { saveToLocalStorage, getFromLocalStorage, removeFromLocalStorage  } from "./localStorage";
+import { saveToLocalStorage, getFromLocalStorage  } from "./localStorage";
 
 export const projectLibrary = getFromLocalStorage('projectLibrary') || [];
 
+export function generateUniqueId() {
+    console.log('generateUniqueId called');
+    return '_' + Math.random().toString(36).substring(2, 9);
+}
+
+export function findProjectById(projectId) {
+    console.log('findProjectById called');
+    return projectLibrary.find(proj => proj.id === projectId);
+}
+
+export function removeFromProjectLibrary(projectId) {
+    console.log('removeFromProjectLibrary called');
+    const projectIndex = projectLibrary.findIndex(proj => proj.id === projectId);
+    projectLibrary.splice(projectIndex, 1);
+    saveToLocalStorage('projectLibrary', projectLibrary);
+}
+
+export function removeTaskFromProject(task) {
+    // logic for removing task from selected project's tasks array
+}
+
 export function Project(name, description, dueDate) {
+    this.id = generateUniqueId();
     this.name = name,
     this.description = description,
     this.dueDate = dueDate,
@@ -10,35 +32,19 @@ export function Project(name, description, dueDate) {
     
     this.addToProjectLibrary = function() {
         console.log('addToProjectLibrary called');
-        //
         projectLibrary.push(this);
         saveToLocalStorage('projectLibrary', projectLibrary);
-    }
-
-    this.removeFromProjectLibrary = function() {
-        console.log('removeFromProjectLibrary called');
-        //
-        const index = projectLibrary.indexOf(this)
-        
-        if (index !== -1) {
-            projectLibrary.splice(index, 1);
-            saveToLocalStorage('projectLibrary', projectLibrary);
-        } else {
-            console.error('Project not found in projectLibrary')
-        }
     }
 
     this.complete = false;
 
     this.markAsComplete = function() {
         console.log('markAsComplete project called');
-        //
         this.complete = true;
     };
 
     this.markAsIncomplete = function() {
         console.log('markAsComplete project called');
-        //
         this.complete = false;
     }
 }

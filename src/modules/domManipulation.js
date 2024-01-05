@@ -12,6 +12,7 @@ export function renderProjectListDisplay() {
         const projectListItem = document.createElement('li');
         projectListItem.classList.add('project-list-item')
         projectListItem.textContent = proj.name;
+        projectListItem.setAttribute('data-project-id', proj.id);
         projectList.appendChild(projectListItem);
     })
 }
@@ -183,103 +184,109 @@ export function renderCreateTaskForm() {
 
 export function renderProjectDetails(project) {
     console.log('renderProjectDetails called');
-    //
+
     const layoutSection = document.getElementById('layout-section');
     layoutSection.textContent = '';
 
-    if (project) {
-        const projectDetails = document.createElement('div');
-        projectDetails.classList.add('project-details');
+    const projectDetails = document.createElement('div');
+    projectDetails.classList.add('project-details');
 
-        const projectHeader = document.createElement('div');
-        projectHeader.classList.add('project-details-header');
+    const projectHeader = document.createElement('div');
+    projectHeader.classList.add('project-details-header');
 
-        const projectName = document.createElement('h2');
-        projectName.textContent = project.name;
-        projectName.classList.add('project-details-name');
+    const projectName = document.createElement('h2');
+    projectName.textContent = project.name;
+    projectName.classList.add('project-details-name');
+    projectName.setAttribute('data-project-id', project.id);
 
-        const projectButtons = document.createElement('div');
-        projectButtons.classList.add('project-details-buttons');
+    const projectButtons = document.createElement('div');
+    projectButtons.classList.add('project-details-buttons');
 
-        const projectDelete = document.createElement('button');
-        projectDelete.setAttribute('type', 'button');
-        projectDelete.classList.add('project-delete-button');
-        projectDelete.textContent = 'DELETE';
+    const projectDelete = document.createElement('button');
+    projectDelete.setAttribute('type', 'button');
+    projectDelete.classList.add('project-delete-button');
+    projectDelete.textContent = 'DELETE';
 
-        const projectDescription = document.createElement('p');
-        projectDescription.textContent = project.description;
-        projectDescription.classList.add('project-details-description');
+    const projectDescription = document.createElement('p');
+    projectDescription.textContent = project.description;
+    projectDescription.classList.add('project-details-description');
 
-        const projectDueDate = document.createElement('p');
-        projectDueDate.textContent = `Due date: ${project.dueDate}`;
-        projectDueDate.classList.add('project-details-due-date');
+    const projectDueDate = document.createElement('p');
+    projectDueDate.textContent = `Due date: ${project.dueDate}`;
+    projectDueDate.classList.add('project-details-due-date');
 
-        const taskList = document.createElement('ul');
-        taskList.classList.add('project-details-task-list');
+    const taskList = document.createElement('ul');
+    taskList.classList.add('project-details-task-list');
 
-        project.tasks.forEach(task => {
-            const taskItem = document.createElement('li');
-            taskItem.classList.add('project-details-task-item');
-            taskItem.setAttribute('data-task-id', task.id);
+    project.tasks.forEach(task => {
+        const taskItem = document.createElement('li');
+        taskItem.classList.add('project-details-task-item');
+        taskItem.setAttribute('data-task-id', task.id);
 
-            const taskItemInfo = document.createElement('div');
-            taskItemInfo.classList.add('task-item-info');
+        const taskItemInfo = document.createElement('div');
+        taskItemInfo.classList.add('task-item-info');
 
-            const taskItemButtons = document.createElement('div');
-            taskItemButtons.classList.add('task-item-buttons');
+        const taskItemButtons = document.createElement('div');
+        taskItemButtons.classList.add('task-item-buttons');
 
-            const taskItemName = document.createElement('div');
-            taskItemName.textContent = task.name;
-            taskItemName.classList.add('task-item-name');
+        const taskItemName = document.createElement('div');
+        taskItemName.textContent = task.name;
+        taskItemName.classList.add('task-item-name');
 
-            const taskItemPriority = document.createElement('div');
-            taskItemPriority.textContent = task.priority;
-            taskItemPriority.classList.add('task-item-priority');
+        const taskItemPriority = document.createElement('div');
+        taskItemPriority.textContent = task.priority;
+        taskItemPriority.classList.add('task-item-priority');
 
-            const taskItemDueDate = document.createElement('div');
-            taskItemDueDate.textContent = task.dueDate;
-            taskItemDueDate.classList.add('task-item-duedate');
+        const taskItemDueDate = document.createElement('div');
+        taskItemDueDate.textContent = task.dueDate;
+        taskItemDueDate.classList.add('task-item-duedate');
 
-            const taskItemDelete = document.createElement('button');
-            taskItemDelete.setAttribute('type', 'button');
-            taskItemDelete.setAttribute('class', 'task-item-delete');
-            taskItemDelete.textContent = 'DELETE';
+        const taskItemDelete = document.createElement('button');
+        taskItemDelete.setAttribute('type', 'button');
+        taskItemDelete.setAttribute('class', 'task-item-delete');
+        taskItemDelete.textContent = 'DELETE';
 
-            taskItemInfo.appendChild(taskItemName);
-            taskItemInfo.appendChild(taskItemDueDate);
-            taskItemInfo.appendChild(taskItemPriority);
+        taskItemInfo.appendChild(taskItemName);
+        taskItemInfo.appendChild(taskItemDueDate);
+        taskItemInfo.appendChild(taskItemPriority);
 
-            taskItemButtons.appendChild(taskItemDelete);
+        taskItemButtons.appendChild(taskItemDelete);
 
-            taskItem.appendChild(taskItemInfo);
-            taskItem.appendChild(taskItemButtons);
+        taskItem.appendChild(taskItemInfo);
+        taskItem.appendChild(taskItemButtons);
 
-            taskList.appendChild(taskItem);
-        });
+        taskList.appendChild(taskItem);
+    });
 
-        const addTaskSection = document.createElement('div');
-        addTaskSection.classList.add('add-task-section');
+    const addTaskSection = document.createElement('div');
+    addTaskSection.classList.add('add-task-section');
 
-        const addTaskButton = document.createElement('button');
-        addTaskButton.setAttribute('id', 'add-task-button');
-        addTaskButton.textContent = 'Add Task';
-        addTaskButton.addEventListener('click', renderCreateTaskForm);
+    const addTaskButton = document.createElement('button');
+    addTaskButton.setAttribute('id', 'add-task-button');
+    addTaskButton.textContent = 'Add Task';
+    addTaskButton.addEventListener('click', renderCreateTaskForm);
 
-        projectButtons.appendChild(projectDelete);
+    projectButtons.appendChild(projectDelete);
 
-        projectHeader.appendChild(projectName);
-        projectHeader.appendChild(projectButtons);
+    projectHeader.appendChild(projectName);
+    projectHeader.appendChild(projectButtons);
 
-        projectDetails.appendChild(projectHeader);
-        projectDetails.appendChild(projectDescription);
-        projectDetails.appendChild(projectDueDate);
-        projectDetails.appendChild(taskList);
+    projectDetails.appendChild(projectHeader);
+    projectDetails.appendChild(projectDescription);
 
-        addTaskSection.appendChild(addTaskButton);
-
-        layoutSection.appendChild(projectDetails);
-        layoutSection.appendChild(addTaskSection);
+    projectDetails.appendChild(projectDueDate);
+    if (projectDueDate.textContent = 'Due Date: ') {
+        projectDetails.removeChild(projectDueDate)
     }
+
+    addTaskSection.appendChild(addTaskButton);
+    
+    projectDetails.appendChild(taskList);
+    projectDetails.appendChild(addTaskSection)
+    
+
+    layoutSection.appendChild(projectDetails);
+
     assignHandler();
 }
 
@@ -300,8 +307,26 @@ export function renderAllTasks() {
         layoutSection.appendChild(noTasksDiv);
 
     } else {
+        const allTasksSection = document.createElement('div');
+        allTasksSection.classList.add('all-tasks-section');
+
+        const allTasksHeader = document.createElement('div');
+        allTasksHeader.classList.add('all-tasks-header');
+
+        const allTasksName = document.createElement('h2');
+        allTasksName.classList.add('all-tasks-name');
+        allTasksName.textContent = 'All Tasks';
+        
         const taskList = document.createElement('ul');
         taskList.classList.add('project-details-task-list');
+
+        const allTasksButtons = document.createElement('div');
+        allTasksButtons.classList.add('all-tasks-buttons');
+
+        const allTasksDelete = document.createElement('button');
+        allTasksDelete.setAttribute('type', 'button');
+        allTasksDelete.classList.add('all-tasks-delete');
+        allTasksDelete.textContent = 'DELETE';
 
         taskLibrary.forEach(task => {
             const taskItem = document.createElement('li');
@@ -339,25 +364,42 @@ export function renderAllTasks() {
 
             taskItem.appendChild(taskItemInfo);
             taskItem.appendChild(taskItemButtons);
-            
+
             taskList.appendChild(taskItem);
         });
-        layoutSection.appendChild(taskList);
+        allTasksButtons.appendChild(allTasksDelete);
+
+        allTasksHeader.appendChild(allTasksName);
+        allTasksHeader.appendChild(allTasksButtons);
+
+        allTasksSection.appendChild(allTasksHeader);
+        allTasksSection.appendChild(taskList);
+
+        layoutSection.appendChild(allTasksSection);
     }
     assignHandler();
 }
 
-export function showProjectLibrary() {
-    console.log('projectLibrary called', projectLibrary);
-}
+// export function renderHighPriorityTasks() {
+//     console.log('renderHighPriorityTasks called');
+//     //
+//     const layoutSection = document.getElementById('layout-section');
+//     layoutSection.textContent = '';
 
-export function showTaskLibrary() {
-    console.log('taskLibrary called', taskLibrary);
-}
+//     const highPriorityTasks = taskLibrary.filter(task => task.priority === 'HIGH');
+//     console.log(highPriorityTasks);
+
+// }
+
+// export function showProjectLibrary() {
+//     console.log('projectLibrary called', projectLibrary);
+// }
+
+// export function showTaskLibrary() {
+//     console.log('taskLibrary called', taskLibrary);
+// }
 
 export function renderLayout() {
-    console.log('renderLayout called');
-    //
     renderProjectListDisplay();
     assignHandler();
 }
