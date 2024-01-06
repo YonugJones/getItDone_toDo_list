@@ -19,10 +19,6 @@ export function removeFromProjectLibrary(projectId) {
     saveToLocalStorage('projectLibrary', projectLibrary);
 }
 
-export function removeTaskFromProject(task) {
-    // logic for removing task from selected project's tasks array
-}
-
 export function Project(name, description, dueDate) {
     this.id = generateUniqueId();
     this.name = name,

@@ -290,6 +290,19 @@ export function renderProjectDetails(project) {
     assignHandler();
 }
 
+export function renderNoProjectSelected() {
+    const layout = document.getElementById('layout-section');
+    layout.textContent = '';
+
+    const noProjectDisplayDiv = document.createElement('div');
+    noProjectDisplayDiv.classList.add('no-project-display');
+    layout.appendChild(noProjectDisplayDiv);
+
+    const noProjectDisplay = document.createElement('h2');
+    noProjectDisplay.textContent = 'No Project Selected';
+    noProjectDisplayDiv.appendChild(noProjectDisplay);
+}
+
 export function renderAllTasks() {
     console.log('renderAllTasks called');
     //
