@@ -3,7 +3,6 @@ import { saveToLocalStorage, getFromLocalStorage  } from "./localStorage";
 export const projectLibrary = getFromLocalStorage('projectLibrary') || [];
 
 export function generateUniqueId() {
-    console.log('generateUniqueId called');
     return '_' + Math.random().toString(36).substring(2, 9);
 }
 
@@ -27,7 +26,6 @@ export function Project(name, description, dueDate) {
     this.tasks = []
     
     this.addToProjectLibrary = function() {
-        console.log('addToProjectLibrary called');
         projectLibrary.push(this);
         saveToLocalStorage('projectLibrary', projectLibrary);
     }

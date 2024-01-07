@@ -1,6 +1,6 @@
 import { projectLibrary } from "./projects";
 import { taskLibrary } from "./tasks";
-import { assignHandler } from "./userInterface";
+import { handleAllTasksClick, handleTodayClick, handleThisWeekClick, handleHighPriorityClick, handleProjectListItemClick, handleCreateProjectClick, handleProjectFormClick, handleProjectDetailsClick, handleTaskFormClick, handleAllTasksDetailsClick } from "./eventHandler";
 
 export function renderProjectListDisplay() {
     console.log('renderProjectListDisplay called');
@@ -14,6 +14,7 @@ export function renderProjectListDisplay() {
         projectListItem.textContent = proj.name;
         projectListItem.setAttribute('data-project-id', proj.id);
         projectList.appendChild(projectListItem);
+        projectListItem.addEventListener('click', handleProjectListItemClick);
     })
 }
 
@@ -88,12 +89,27 @@ export function renderCreateProjectForm() {
 
     layoutSection.appendChild(projectForm);
 
-    assignHandler();
+    handleProjectFormClick();
 }
 
-export function renderCreateTaskForm() {
-    console.log('renderCreateTaskForm called');
+export function renderRemoveProjectForm() {
+    console.log('renderRemoveProjectForm called');
+    renderNoProjectSelected();
+}
+
+export function renderAddTaskForm() {
+    console.log('renderAddTaskForm called');
     //
+
+    const projectDetailsHeader = document.querySelector('.project-details-header');
+    projectDetailsHeader.style.display = 'none';
+
+    const projectDetailsDescription = document.querySelector('.project-details-description');
+    projectDetailsDescription.style.display = 'none';
+
+    const projectDetailsTaskList = document.querySelector('.project-details-task-list');
+    projectDetailsTaskList.style.display = 'none';
+
     const addTaskSection = document.querySelector('.add-task-section');
 
     const addTaskButton = document.getElementById('add-task-button');
@@ -179,7 +195,7 @@ export function renderCreateTaskForm() {
 
     addTaskSection.appendChild(taskForm);
 
-    assignHandler();
+    handleTaskFormClick();
 }
 
 export function renderProjectDetails(project) {
@@ -264,7 +280,7 @@ export function renderProjectDetails(project) {
     const addTaskButton = document.createElement('button');
     addTaskButton.setAttribute('id', 'add-task-button');
     addTaskButton.textContent = 'Add Task';
-    addTaskButton.addEventListener('click', renderCreateTaskForm);
+    addTaskButton.addEventListener('click', renderAddTaskForm);
 
     projectButtons.appendChild(projectDelete);
 
@@ -284,13 +300,13 @@ export function renderProjectDetails(project) {
     projectDetails.appendChild(taskList);
     projectDetails.appendChild(addTaskSection)
     
-
     layoutSection.appendChild(projectDetails);
 
-    assignHandler();
+    handleProjectDetailsClick();
 }
 
 export function renderNoProjectSelected() {
+    console.log('renderNoProjectSelected called');
     const layout = document.getElementById('layout-section');
     layout.textContent = '';
 
@@ -389,30 +405,18 @@ export function renderAllTasks() {
         allTasksSection.appendChild(taskList);
 
         layoutSection.appendChild(allTasksSection);
+
+        handleAllTasksDetailsClick();
     }
-    assignHandler();
 }
 
-// export function renderHighPriorityTasks() {
-//     console.log('renderHighPriorityTasks called');
-//     //
-//     const layoutSection = document.getElementById('layout-section');
-//     layoutSection.textContent = '';
-
-//     const highPriorityTasks = taskLibrary.filter(task => task.priority === 'HIGH');
-//     console.log(highPriorityTasks);
-
-// }
-
-// export function showProjectLibrary() {
-//     console.log('projectLibrary called', projectLibrary);
-// }
-
-// export function showTaskLibrary() {
-//     console.log('taskLibrary called', taskLibrary);
-// }
-
-export function renderLayout() {
+export function initialRender() {
+    console.log('initialRender called:');
+    handleAllTasksClick();
+    handleTodayClick();
+    handleThisWeekClick();
+    handleHighPriorityClick();
     renderProjectListDisplay();
-    assignHandler();
+    handleCreateProjectClick();
+    renderNoProjectSelected();
 }

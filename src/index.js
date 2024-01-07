@@ -1,8 +1,7 @@
-import { renderLayout, renderNoProjectSelected } from "./modules/domManipulation";
+import { initialRender } from "./modules/domManipulation";
 import { getFromLocalStorage ,removeFromLocalStorage } from "./modules/localStorage";
 
-renderNoProjectSelected();
-renderLayout(); 
+initialRender();
 
 
 //
@@ -11,4 +10,5 @@ renderLayout();
 
 // removeFromLocalStorage('taskLibrary');
 // removeFromLocalStorage('projectLibrary');
+
 
