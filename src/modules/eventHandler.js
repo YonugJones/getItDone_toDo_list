@@ -1,5 +1,5 @@
-import { renderAllTasks, renderCreateProjectForm, renderRemoveProjectForm } from "./domManipulation";
-import { deleteProject, addTaskToProject, removeTaskFromProject, deleteAllTasks, createProject, projectListItemClick  } from './userInterface'
+import { renderAllTasks, renderCreateProjectForm, renderHighPriorityTasks, renderRemoveProjectForm, renderThisWeekTasks, renderTodayTasks } from "./domManipulation";
+import { deleteProject, addTaskToProject, removeTaskFromProject, deleteAllTasks, createProject, projectListItemClick, deleteTodayTasks, deleteThisWeekTasks, deleteHighPriorityTasks  } from './userInterface'
 import { removeFromTaskLibrary } from "./tasks";
 
 
@@ -12,25 +12,19 @@ export function handleAllTasksClick() {
 export function handleTodayClick() {
     console.log('handleTodayClick called');
     const todayButton = document.getElementById('today-button');
-    todayButton.addEventListener('click', () => {
-        console.log('todayButton clicked');
-    })
+    todayButton.addEventListener('click', renderTodayTasks);
 }
 
 export function handleThisWeekClick() {
     console.log('handleThisWeekClick called');
     const thisWeekButton = document.getElementById('this-week-button');
-    thisWeekButton.addEventListener('click', () => {
-        console.log('thisWeekButon clicked');
-    })
+    thisWeekButton.addEventListener('click', renderThisWeekTasks);
 }
 
 export function handleHighPriorityClick() {
     console.log('handleHighPriorityClick called');
     const highPriorityButton = document.getElementById('high-priority-button');
-    highPriorityButton.addEventListener('click', () => {
-        console.log('highPriorityButton clicked');
-    })
+    highPriorityButton.addEventListener('click', renderHighPriorityTasks);
 }
 
 export function handleProjectListItemClick() {
@@ -63,6 +57,7 @@ export function handleTaskFormClick() {
 
     const projectDetailsHeader = document.querySelector('.project-details-header');
     const projectDetailsDescription = document.querySelector('.project-details-description');
+    const projectDetailsDueDate = document.querySelector('.project-details-due-date');
     const projectDetailsTaskList = document.querySelector('.project-details-task-list');
 
     if (taskForm) {
@@ -74,6 +69,7 @@ export function handleTaskFormClick() {
                 taskSection.removeChild(taskForm);
                 projectDetailsHeader.style.display = '';
                 projectDetailsDescription.style.display = '';
+                projectDetailsDueDate.style.display = '';
                 projectDetailsTaskList.style.display = '';
                 addTaskButton.style.display = '';
             } else {
@@ -86,6 +82,7 @@ export function handleTaskFormClick() {
             taskSection.removeChild(taskForm);
             projectDetailsHeader.style.display = '';
                 projectDetailsDescription.style.display = '';
+                projectDetailsDueDate.style.display = '';
                 projectDetailsTaskList.style.display = '';
                 addTaskButton.style.display = '';
         })
@@ -97,20 +94,35 @@ export function handleAllTasksHeaderClick() {
     if (allTasksSection) {
         console.log('handleAllTasksHeaderClick called');
         const allTasksDelete = document.querySelector('.all-tasks-delete');
-        allTasksDelete.addEventListener('click', () => {
-            deleteAllTasks();
-        })
+        allTasksDelete.addEventListener('click', deleteAllTasks);
     }
 }
 
-export function handleAllTasksDetailsClick() {
-    handleAllTasksHeaderClick()
-    handleTaskItemClick();
+export function handleTodayTasksHeaderClick() {
+    const todayTasksSection = document.querySelector('.today-tasks-section');
+    if (todayTasksSection) {
+        console.log('handleTodayTasksHeaderClick called');
+        const todayTasksDelete = document.querySelector('.today-tasks-delete');
+        todayTasksDelete.addEventListener('click', deleteTodayTasks);
+    }
 }
 
-export function handleProjectDetailsClick() {
-    handleProjectHeaderClick();
-    handleTaskItemClick();
+export function handleThisWeekTasksHeaderClick() {
+    const thisWeekTasksSection = document.querySelector('.this-week-tasks-header');
+    if (thisWeekTasksSection) {
+        console.log('handleThisWeekTasksHeaderClick called');
+        const thisWeekTasksDelete = document.querySelector('.this-week-tasks-delete');
+        thisWeekTasksDelete.addEventListener('click', deleteThisWeekTasks);
+    }
+}
+
+export function handleHighPriorityHeaderClick() {
+    const highPrioritySection = document.querySelector('.high-priority-header');
+    if (highPrioritySection) {
+        console.log('handleHighPriorityHeader called');
+        const highPriorityDelete = document.querySelector('.high-priority-delete');
+        highPriorityDelete.addEventListener('click', deleteHighPriorityTasks)
+    }
 }
 
 export function handleProjectHeaderClick() {

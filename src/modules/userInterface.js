@@ -1,7 +1,8 @@
-import { renderProjectDetails, renderAllTasks, renderNoProjectSelected, renderProjectListDisplay } from "./domManipulation";
+import { renderProjectDetails, renderAllTasks, renderNoProjectSelected, renderProjectListDisplay, renderHighPriorityTasks, renderTodayTasks, renderThisWeekTasks } from "./domManipulation";
 import { Project, projectLibrary, findProjectById, removeFromProjectLibrary } from "./projects";
 import { Task, findTaskById, removeFromTaskLibrary, taskLibrary } from "./tasks";
 import { saveToLocalStorage } from "./localStorage";
+import { format, addDays, isToday, isThisWeek } from 'date-fns';
 
 export function projectListItemClick(event) {
     console.log('projectListItemClick called');
@@ -16,9 +17,11 @@ export function createProject() {
     console.log('createProject called');
     const projectName = document.getElementById('pname').value;
     const projectDescription = document.getElementById('pdescription').value;
-    const projectDueDate = document.getElementById('pduedate').value;
+    const projectDueDateInput = document.getElementById('pduedate');
+    const projectDueDate = new Date(projectDueDateInput.value);
+    const projectDueDateFormatted = format(addDays(projectDueDate, 1), 'MM-dd-yyyy');
 
-    const newProject = new Project(projectName, projectDescription, projectDueDate);
+    const newProject = new Project(projectName, projectDescription, projectDueDateFormatted);
     if (projectName === '') {
         alert('Project Name cannot be blank');
         return;
@@ -54,10 +57,12 @@ export function deleteProject() {
 export function addTaskToProject() {
     console.log('addTaskToProject called');
     const taskName = document.getElementById('tname').value;
-    const taskDueDate = document.getElementById('tduedate').value;
+    const taskDueDateInput = document.getElementById('tduedate');
+    const taskDueDate = new Date(taskDueDateInput.value);
+    const taskDueDateFormatted = format(addDays(taskDueDate, 1), 'MM-dd-yyyy');
     const taskPriority = document.getElementById('tpriority').value;
 
-    const newTask = new Task(taskName, taskDueDate, taskPriority); 
+    const newTask = new Task(taskName, taskDueDateFormatted, taskPriority); 
     newTask.addToTaskLibrary();
     
     const projectId = document.querySelector('.project-details-name').dataset.projectId;
@@ -71,7 +76,6 @@ export function addTaskToProject() {
 export function removeTaskFromProject(taskId) {
     console.log('removeTaskFromProject called');
 
-    const task = findTaskById(taskId); 
     const projectContainingTask = projectLibrary.find(proj => proj.tasks.some(t => t.id === taskId));
     const projectTaskIndex = projectContainingTask.tasks.findIndex(t => t.id === taskId);
     projectContainingTask.tasks.splice(projectTaskIndex, 1);
@@ -81,11 +85,23 @@ export function removeTaskFromProject(taskId) {
 
     const projectHeader = document.querySelector('.project-details-header');
     const allTasksHeader = document.querySelector('.all-tasks-header');
+    const highPriorityHeader = document.querySelector('.high-priority-header');
+    const todayHeader = document.querySelector('.today-tasks-header');
+    const thisWeekHeader = document.querySelector('.this-week-tasks-header');
+
     if (projectHeader) {
         renderProjectDetails(projectContainingTask);
     } else if (allTasksHeader) {
         renderAllTasks();
-    } 
+    } else if (highPriorityHeader) {
+        renderHighPriorityTasks();
+    } else if (todayHeader) {
+        renderTodayTasks();
+    } else if (thisWeekHeader) {
+        renderThisWeekTasks();
+    } else {
+        console.error('couldnt find the appropriate header');
+    }
 }
 
 export function deleteAllTasks() {
@@ -100,4 +116,56 @@ export function deleteAllTasks() {
 
     saveToLocalStorage('projectLibrary', projectLibrary);
     renderAllTasks();
+}
+
+export function deleteTodayTasks() {
+    console.log('deleteTodayTasks called');
+
+    const todayTasks = taskLibrary.filter(task => {
+        return isToday(new Date(task.dueDate));
+    });
+
+    const todayIdArray = todayTasks.map(task => task.id)
+    todayIdArray.forEach(task => removeFromTaskLibrary(task));
+
+    projectLibrary.forEach(project => {
+        project.tasks = project.tasks.filter(task => !todayIdArray.includes(task.id))
+    });
+
+    saveToLocalStorage('projectLibrary', projectLibrary);
+    renderTodayTasks();
+}
+
+export function deleteThisWeekTasks() {
+    console.log('deleteThisWeekTasks called');
+
+    const thisWeekTasks = taskLibrary.filter(task => {
+        return isThisWeek(new Date(task.dueDate));
+    });
+
+    const thisWeekIdArray = thisWeekTasks.map(task => task.id);
+    thisWeekIdArray.forEach(task => removeFromTaskLibrary(task));
+
+    projectLibrary.forEach(project => {
+        project.tasks = project.tasks.filter(task => !thisWeekIdArray.includes(task.id))
+    });
+
+    saveToLocalStorage('projectLibrary', projectLibrary);
+    renderThisWeekTasks();
+}
+
+export function deleteHighPriorityTasks() {
+    console.log('deleteHighPriorityTasks called');
+
+    const highPriorityTasks = taskLibrary.filter(task => task.priority === 'High');
+
+    const highPriorityIdArray = highPriorityTasks.map(task => task.id);
+    highPriorityIdArray.forEach(task => removeFromTaskLibrary(task));
+
+    projectLibrary.forEach(project => {
+        project.tasks = project.tasks.filter(task => !highPriorityIdArray.includes(task.id))
+    });
+
+    saveToLocalStorage('projectLibrary', projectLibrary);
+    renderHighPriorityTasks();
 }
