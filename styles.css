@@ -130,12 +130,17 @@ main {
 }
 
 .project-details,
-.all-tasks-section {
+.all-tasks-section,
+.today-tasks-section,
+.this-week-tasks-section {
     padding: 10px;
 }
 
 .project-details-header,
-.all-tasks-header {
+.all-tasks-header,
+.today-tasks-header,
+.this-week-tasks-header,
+.high-priority-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
