@@ -18,19 +18,26 @@ export function createProject() {
     const projectName = document.getElementById('pname').value;
     const projectDescription = document.getElementById('pdescription').value;
     const projectDueDateInput = document.getElementById('pduedate');
-    const projectDueDate = new Date(projectDueDateInput.value);
-    const projectDueDateFormatted = format(addDays(projectDueDate, 1), 'MM-dd-yyyy');
+    const projectDueDateValue = projectDueDateInput.value;
+
+    let projectDueDateFormatted = '';
+    if (projectDueDateValue.trim() !== '') {
+        const projectDueDate = new Date(projectDueDateValue);
+        projectDueDateFormatted = format(addDays(projectDueDate, 1), 'MM-dd-yyyy');
+    }
 
     const newProject = new Project(projectName, projectDescription, projectDueDateFormatted);
+
     if (projectName === '') {
         alert('Project Name cannot be blank');
         return;
-    } 
+    }
 
     newProject.addToProjectLibrary();
     renderProjectDetails(newProject);
     renderProjectListDisplay();
 }
+
 
 export function deleteProject() {
     console.log('deleteProject called');
@@ -58,8 +65,14 @@ export function addTaskToProject() {
     console.log('addTaskToProject called');
     const taskName = document.getElementById('tname').value;
     const taskDueDateInput = document.getElementById('tduedate');
-    const taskDueDate = new Date(taskDueDateInput.value);
-    const taskDueDateFormatted = format(addDays(taskDueDate, 1), 'MM-dd-yyyy');
+    const taskDueDateValue = taskDueDateInput.value;
+
+    let taskDueDateFormatted = '';
+    if (taskDueDateValue.trim() !== '') {
+        const taskDueDate = new Date(taskDueDateValue);
+        taskDueDateFormatted = format(addDays(taskDueDate, 1), 'MM-dd-yyyy');
+    }
+
     const taskPriority = document.getElementById('tpriority').value;
 
     const newTask = new Task(taskName, taskDueDateFormatted, taskPriority); 
@@ -72,6 +85,7 @@ export function addTaskToProject() {
     saveToLocalStorage('projectLibrary', projectLibrary);
     renderProjectDetails(project);
 }
+
 
 export function removeTaskFromProject(taskId) {
     console.log('removeTaskFromProject called');

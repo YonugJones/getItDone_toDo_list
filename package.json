@@ -4,7 +4,8 @@
   "description": "to do list with intuitive UI and productivity features",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gitHubPrep": "git subtree push --prefix dist origin gh-pages"
   },
   "author": "YonugJones",
   "license": "ISC",

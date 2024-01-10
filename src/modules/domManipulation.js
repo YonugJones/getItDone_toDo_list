@@ -245,7 +245,7 @@ export function renderProjectDetails(project) {
         const formattedProjectDueDate = format(dueDate, 'MM-dd-yyyy');
         projectDueDate.textContent = `Due date: ${formattedProjectDueDate}`;
         projectDueDate.classList.add('project-details-due-date');
-    } else {
+    } else if (!project.dueDate) {
         projectDueDate.textContent = 'No due date';
         projectDueDate.classList.add('project-details-due-date');
     }
